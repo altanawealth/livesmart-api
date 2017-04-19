@@ -3,12 +3,9 @@ title: API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='mailto:info@getlivesmart.com'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -19,171 +16,96 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Livesmart API! You can use our API to access Livesmart API endpoints.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+We have language bindings in Shell! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.getlivesmart.com/api/v2/company/employee/register"
+  -H "API-KEY: 131234345435" -H "LIVESMART-HMAC-SHA256:34jkWE2RTFhjhd32d2d22a1SAW"
 ```
 
-```javascript
-const kittn = require('kittn');
 
-let api = kittn.authorize('meowmeowmeow');
-```
+> Make sure to replace `131234345435` with your API key.
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Livesmart uses API keys to allow access to the API. We ll provide you API key upon request.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Livesmart expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+`API-KEY: 131234345435`
+
+`LIVESMART-HMAC-SHA256: 34jkWE2RTFhjhd32d2d22a1SAW`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>131234345435</code> with your personal API key and 34jkWE2RTFhjhd32d2d22a1SAW with the HMAC of the request body using the secret key.
 </aside>
 
-# Kittens
 
-## Get All Kittens
+# User Purchase
 
-```ruby
-require 'kittn'
+## Register User Purchase
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+curl "https://api.getlivesmart.com/api/v2/purchase/register"
+  -H "API-KEY: 131234345435" -H "LIVESMART-HMAC-SHA256: dsfjsdklfjwef2342jkh14141jkh124h4k1h"
+  -H "Content-Type: application/json"
+  -X POST -d '{
+    "email": "johndoe@domain.com",
+    "sku": "LSP3",
+    "collectionMethod": "HomeKit",
+    "birthDate": "1974-12-16",
+    "firstName": "John",
+    "lastName": "Doe",
+    "gender": "M",
+    "phone": "44 00 22200000",
+    "street": "221B Baker Street",
+    "city": "London",
+    "zip": "NW1 6XE",
+    "country": "United Kingdom"
+    }'
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "orderNumber": "1204912980",
+  "patientId": 63427
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint register a user purchase.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST https://api.getlivesmart.com/api/v2/purchase/register`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter | Required | Example | Description
+--------- | ------- | ----------- | ----------
+sku | True | LSP3 |
+collectionMethod | True | HomeKit|  Collection Method Selected (HomeKit, Lab, Visit)
+email | True | username@domain.com |
+birthDate | True | 2000-12-01 | Format is YYYY-MM-DD
+firstName | True | John |
+lastName | True | Doe |
+gender | True | M | M for Male and F for Female
+phone | True | 44 020 000 000 |
+street | True | Street Address |
+city | True | London |
+zip | True | 4W1 1SNG |
+country | True | United Kindgom |
 
+
+<aside class="success">
+Remember — a happy request is an authenticated request!
+</aside>
